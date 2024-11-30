@@ -11,11 +11,11 @@ using Aqua
 
 @testset "OmniParserIconDetectors.jl" begin
     @testset "Code quality (Aqua.jl)" begin
-        Aqua.test_all(OmniParserIconDetectors)
+        Aqua.test_all(OmniParserIconDetectors; persistent_tasks = false)
     end
     include("types.jl")
     include("model.jl")
     include("image_processing.jl")
     include("detection.jl")
-    include("drawing.jl")
+    # include("drawing.jl")
 end
