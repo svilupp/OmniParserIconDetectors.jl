@@ -1,6 +1,10 @@
-# OmniParserIconDetectors.jl
+```@meta
+CurrentModule = OmniParserIconDetectors
+```
 
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://svilupp.github.io/OmniParserIconDetectors.jl/stable/) [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://svilupp.github.io/OmniParserIconDetectors.jl/dev/) [![Build Status](https://github.com/svilupp/OmniParserIconDetectors.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/svilupp/OmniParserIconDetectors.jl/actions/workflows/CI.yml?query=branch%3Amain) [![Coverage](https://codecov.io/gh/svilupp/OmniParserIconDetectors.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/svilupp/OmniParserIconDetectors.jl) [![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
+# OmniParserIconDetectors
+
+Documentation for [OmniParserIconDetectors](https://github.com/svilupp/OmniParserIconDetectors.jl).
 
 A lightweight Julia wrapper for Microsoft's OmniParser icon detection model that:
 - Automatically detects UI elements like buttons and icons in screenshots
@@ -49,7 +53,8 @@ out = draw_detections(img, detections; save_path = "examples/detection_example.p
 
 Voila!
 
-![Detection Example](examples/detection_example.png)
+![Detection Example](detection_example.png)
+
 
 ## Usage
 
