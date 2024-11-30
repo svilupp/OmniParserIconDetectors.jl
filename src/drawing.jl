@@ -94,6 +94,19 @@ const DIGIT_PATHS = Dict(
     ]
 )
 
+"""
+    path_to_points(path, scale::Real = 1.0, steps::Int = 30)
+
+Convert a path of drawing commands into a sequence of points.
+
+# Arguments
+- `path`: Vector of tuples containing drawing commands ('M'=moveto, 'L'=lineto, 'C'=curveto)
+- `scale::Real`: Scaling factor for the points (default: 1.0)
+- `steps::Int`: Number of interpolation steps for curves and lines (default: 30)
+
+# Returns
+- Vector of (x,y) coordinate tuples representing the path
+"""
 function path_to_points(path, scale::Real = 1.0, steps::Int = 30)
     points = Tuple{Float64, Float64}[]
     current_pos = (0.0, 0.0)
@@ -134,6 +147,20 @@ function path_to_points(path, scale::Real = 1.0, steps::Int = 30)
     points
 end
 
+"""
+    draw_digit!(img::AbstractMatrix, digit::Char, x::Int, y::Int,
+                scale::Float64 = 1.0, color::ColorTypes.Color = RGB{N0f8}(1,1,1))
+
+Draw a single digit character onto an image matrix.
+
+# Arguments
+- `img`: Target image matrix to draw on
+- `digit`: Character ('0'-'9') to draw
+- `x`: X-coordinate for digit placement
+- `y`: Y-coordinate for digit placement  
+- `scale`: Size scaling factor (default: 1.0)
+- `color`: Color of the digit (default: white)
+"""
 function draw_digit!(img::AbstractMatrix, digit::Char, x::Int, y::Int,
         scale::Float64 = 1.0, color::ColorTypes.Color = RGB{N0f8}(1, 1, 1))
     if !haskey(DIGIT_PATHS, digit)
@@ -171,6 +198,20 @@ function draw_digit!(img::AbstractMatrix, digit::Char, x::Int, y::Int,
     end
 end
 
+"""
+    draw_number!(img::AbstractMatrix, number::Number, x::Int, y::Int,
+                scale::Float64 = 1.0, color::ColorTypes.Color = RGB{N0f8}(1,1,1))
+
+Draw a number (including negative numbers) onto an image matrix.
+
+# Arguments
+- `img`: Target image matrix to draw on
+- `number`: Number to draw (can be negative)
+- `x`: X-coordinate for number placement
+- `y`: Y-coordinate for number placement
+- `scale`: Size scaling factor (default: 1.0)
+- `color`: Color of the number (default: white)
+"""
 function draw_number!(img::AbstractMatrix, number::Number, x::Int, y::Int,
         scale::Float64 = 1.0, color::ColorTypes.Color = RGB{N0f8}(1, 1, 1))
     num_str = string(abs(number))
@@ -195,6 +236,21 @@ function draw_number!(img::AbstractMatrix, number::Number, x::Int, y::Int,
     end
 end
 
+"""
+    draw_label!(img::AbstractMatrix{C}, x1::Int, y1::Int,
+                detection_id::Int, confidence::Float64, color::C; thickness::Int = 2)
+
+Draw a detection label box with ID and confidence score.
+
+# Arguments
+- `img`: Target image matrix to draw on
+- `x1`: X-coordinate for label placement
+- `y1`: Y-coordinate for label placement
+- `detection_id`: Detection ID number to display
+- `confidence`: Confidence score (0-100) affecting label color
+- `color`: Base color for the label box
+- `thickness`: Line thickness for the box (default: 2)
+"""
 function draw_label!(img::AbstractMatrix{C}, x1::Int, y1::Int,
         detection_id::Int, confidence::Float64, color::C; thickness::Int = 2) where {C <:
                                                                                      ColorTypes.Color}
@@ -236,8 +292,22 @@ function draw_label!(img::AbstractMatrix{C}, x1::Int, y1::Int,
     end
 end
 
-function draw_bbox!(
-        img::AbstractMatrix, x1::Int, y1::Int, x2::Int, y2::Int,
+"""
+    draw_bbox!(img::AbstractMatrix, x1::Int, y1::Int, x2::Int, y2::Int,
+               color::ColorTypes.Color; thickness::Int = 2)
+
+Draw a bounding box on an image with specified thickness.
+
+# Arguments
+- `img`: Target image matrix to draw on
+- `x1`: Left X-coordinate of box
+- `y1`: Top Y-coordinate of box
+- `x2`: Right X-coordinate of box
+- `y2`: Bottom Y-coordinate of box
+- `color`: Color of the bounding box
+- `thickness`: Line thickness (default: 2)
+"""
+function draw_bbox!(img::AbstractMatrix, x1::Int, y1::Int, x2::Int, y2::Int,
         color::ColorTypes.Color; thickness::Int = 2)
     height, width = size(img)
 
