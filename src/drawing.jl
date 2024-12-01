@@ -257,38 +257,39 @@ function draw_label!(img::AbstractMatrix{C}, x1::Int, y1::Int,
     height, width = size(img)
 
     # Calculate indicator dimensions based only on digits (30% smaller)
-    indicator_height = 34  # Was 48
+    indicator_height = 34
     digits = detection_id > 0 ? length(string(detection_id)) : 1
-    indicator_width = round(Int, 17 * digits)  # Was 24 * digits
-
-    # Add padding (scaled down)
-    indicator_width += 8 + thickness  # Was 12 + thickness
+    indicator_width = round(Int, 17 * digits)
+    indicator_width += 8 + thickness
 
     # Adjust position if label would go outside image bounds
-    label_x = x1 - thickness  # Shift left by thickness to align with bbox
+    label_x = max(1, min(width - indicator_width, x1 - thickness))
     label_y = y1
 
-    if label_x + indicator_width > width
-        label_x = width - indicator_width
+    # Ensure y-range stays within bounds
+    if label_y < indicator_height
+        label_y = min(height, indicator_height + 1)
+    elseif label_y > height
+        label_y = height
     end
 
-    if label_y - indicator_height < 1
-        label_y = y1 + indicator_height
-    end
+    y_range = max(1, label_y - indicator_height):min(height, label_y)
+    x_range = max(1, label_x):min(width, label_x + indicator_width)
 
-    y_range = (label_y - indicator_height):label_y
-    x_range = label_x:min(width, label_x + indicator_width)
-    img[y_range, x_range] .= color
+    # Only draw if ranges are valid
+    if !isempty(y_range) && !isempty(x_range)
+        img[y_range, x_range] .= color
 
-    # Calculate perceived brightness for text color
-    t = min(1.0, confidence / 100.0)
-    brightness = 0.299 * (1.0 - t) + 0.587 * t + 0.114 * 0.0
-    text_color = brightness > 0.5 ? C(RGB(0.1, 0.1, 0.1)) : C(RGB(0.9, 0.9, 0.9))
+        # Calculate perceived brightness for text color
+        t = min(1.0, confidence / 100.0)
+        brightness = 0.299 * (1.0 - t) + 0.587 * t + 0.114 * 0.0
+        text_color = brightness > 0.5 ? C(RGB(0.1, 0.1, 0.1)) : C(RGB(0.9, 0.9, 0.9))
 
-    if detection_id > 0
-        text_x = label_x + 4  # Was 6
-        text_y = label_y - indicator_height + 3  # Was 4
-        draw_number!(img, detection_id, text_x, text_y, 2.1, text_color)  # Scale was 3.0
+        if detection_id > 0
+            text_x = label_x + 4
+            text_y = max(1, label_y - indicator_height + 3)
+            draw_number!(img, detection_id, text_x, text_y, 2.1, text_color)
+        end
     end
 end
 
