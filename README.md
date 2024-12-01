@@ -19,13 +19,9 @@ using Pkg
 # Install the package
 Pkg.add(url="https://github.com/svilupp/OmniParserIconDetectors.jl")
 
-# Important: This package requires a specific version of ONNXRunTime.jl
-Pkg.add(url = "https://github.com/svilupp/ONNXRunTime.jl", rev = "mac120")
-
 # Set the environment variable to allow for automatic downloads
 ENV["DATADEPS_ALWAYS_ACCEPT"] = "true"
 ```
-To simplify the installation process, you can run the `scripts/0_set_up.jl` script.
 
 ## Getting Started
 
