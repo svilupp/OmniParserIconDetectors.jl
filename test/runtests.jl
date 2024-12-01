@@ -17,5 +17,5 @@ using Aqua
     include("model.jl")
     include("image_processing.jl")
     include("detection.jl")
-    # include("drawing.jl")
+    include("drawing.jl")
 end
