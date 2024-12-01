@@ -131,8 +131,8 @@ Check out the `examples/` folder for sample code and detection results:
 This package uses the OmniParser icon detection model from Microsoft, available at:
 https://huggingface.co/onnx-community/OmniParser-icon_detect
 
-> [!IMPORTANT]
-
-For the model checkpoint, please note that icon_detect model is under **AGPL license** since it is a license inherited from the original yolo model. Please refer to the `LICENSE_MODEL` or the original file at [HuggingFace Repo](https://huggingface.co/microsoft/OmniParser/resolve/main/icon_detect/LICENSE).
+> [!WARNING]
+>
+> For the model checkpoint, please note that icon_detect model is under **AGPL license** since it is a license inherited from the original yolo model. Please refer to the `LICENSE_MODEL` or the original file at [HuggingFace Repo](https://huggingface.co/microsoft/OmniParser/resolve/main/icon_detect/LICENSE).
 
 The model weights are downloaded automatically from [HuggingFace](https://huggingface.co/onnx-community/OmniParser-icon_detect) when the package is loaded, but you must set `ENV["DATADEPS_ALWAYS_ACCEPT"] = "true"` to allow for automatic downloads.
